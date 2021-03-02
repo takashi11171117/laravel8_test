@@ -6,8 +6,19 @@ use Livewire\Component;
 
 class Comments extends Component
 {
+    public $model;
+
     public function render()
     {
-        return view('livewire.comments');
+        $comments = $this->model
+            ->comments()
+            ->with('user')
+            ->parent()
+            ->latest()
+            ->get();
+
+        return view('livewire.comments', [
+            'comments' => $comments
+        ]);
     }
 }
