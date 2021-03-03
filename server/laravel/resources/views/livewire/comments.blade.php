@@ -23,10 +23,14 @@
             <img class="h-10 w-10 rounded-full" src="{{ auth()->user()->avatar() }}" alt="{{ auth()->user()->name }}">
           </div>
           <div class="min-w-0 flex-1">
-            <form>
+            <form wire:submit.prevent="postComment">
               <div>
                 <label for="comment" class="sr-only">Comment body</label>
-                <textarea id="comment" name="comment" rows="3" class="shadow-sm block w-full focus:ring-blue-500 focus:border-blue-500 border-gray-300 rounded-md" placeholder="Write something"></textarea>
+                <textarea id="comment" name="comment" rows="3" class="shadow-sm block w-full focus:ring-blue-500 focus:border-blue-500 border-gray-300 rounded-md @error('newCommentState.body') border-red-500 @enderror" placeholder="Write something" wire:model.defer="newCommentState.body"></textarea>
+
+                @error('newCommentState.body')
+                    <p class="mt-2 text-sm text-red-500">{{ $message }}</p>
+                @enderror
               </div>
               <div class="mt-3 flex items-center justify-between">
                 <button type="submit" class="inline-flex items-center justify-center px-4 py-2 border border-transparent font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">

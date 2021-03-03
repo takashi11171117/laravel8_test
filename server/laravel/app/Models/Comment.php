@@ -10,6 +10,10 @@ class Comment extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'body'
+    ];
+
     public function isParent()
     {
         return is_null($this->parent_id);
