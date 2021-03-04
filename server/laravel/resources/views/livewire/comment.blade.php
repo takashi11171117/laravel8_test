@@ -30,29 +30,33 @@
       <div class="mt-2 space-x-2">
         @auth
           @if ($comment->isParent())
-            <button>
+            <button wire:click="$toggle('isReplying')" type="button" class="text-gray-900 font-medium">
               Reply
             </button>
           @endif
 
-          <button wire:click="$toggle('isEditing')" type="button" class="text-gray-900 font-medium">
-              Edit
-          </button>
+          @can('update', $comment)
+            <button wire:click="$toggle('isEditing')" type="button" class="text-gray-900 font-medium">
+                Edit
+            </button>
+          @endcan
 
-          <button
-              type="button"
-              class="text-gray-900 font-medium"
-              x-on:click="confirmCommentDeletion"
-              x-data="{
-                confirmCommentDeletion () {
-                  if (window.confirm('You sure?')) {
-                    @this.call('deleteComment')
-                  }
-                }
-              }"
+          @can('destroy', $comment)
+            <button
+                type="button"
+                class="text-gray-900 font-medium"
+                x-on:click="confirmCommentDeletion"
+                x-data="{
+                    confirmCommentDeletion () {
+                    if (window.confirm('You sure?')) {
+                        @this.call('deleteComment')
+                    }
+                    }
+                }"
             >
               Delete
             </button>
+          @endcan
         @endauth
       </div>
     </div>

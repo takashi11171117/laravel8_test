@@ -3,9 +3,12 @@
 namespace App\Http\Livewire;
 
 use Livewire\Component;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class Comment extends Component
 {
+    use AuthorizesRequests;
+
     public $comment;
 
     protected $listeners = [
@@ -41,6 +44,8 @@ class Comment extends Component
 
     public function editComment()
     {
+        $this->authorize('update', $this->comment);
+
         $this->comment->update($this->editState);
 
         $this->isEditing = false;
@@ -48,6 +53,8 @@ class Comment extends Component
 
     public function deleteComment()
     {
+        $this->authorize('destroy', $this->comment);
+
         $this->comment->delete();
 
         $this->emitUp('refresh');

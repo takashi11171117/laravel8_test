@@ -40,7 +40,7 @@ class Comments extends Component
     {
         $comments = $this->model
             ->comments()
-            ->with('user')
+            ->with('user', 'children.user', 'children.children')
             ->parent()
             ->latest()
             ->get();
