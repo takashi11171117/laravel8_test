@@ -25,9 +25,13 @@
             </div>
         </form>
         @else
+          <p class="text-gray-700">{{ $comment->presenter()->markdownBody() }}</p>
         @endif
       </div>
       <div class="mt-2 space-x-2">
+        <span class="text-gray-500 font-medium">
+          {{ $comment->presenter()->relativeCreatedAt() }}
+        </span>
         @auth
           @if ($comment->isParent())
             <button wire:click="$toggle('isReplying')" type="button" class="text-gray-900 font-medium">
