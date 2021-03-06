@@ -10,6 +10,8 @@
             @foreach($comments as $comment)
               <livewire:comment :comment="$comment" :key="$comment->id" />
             @endforeach
+
+            {{ $comments->links() }}
           @else
             <p>No comments yet</p>
           @endif
