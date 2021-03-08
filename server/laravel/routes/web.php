@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\EpisodeController;
+use App\Http\Controllers\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +18,9 @@ use App\Http\Controllers\EpisodeController;
 */
 
 Route::get('/', HomeController::class)->name('home');
+
+Route::get('/products/{product:slug}', [ProductController::class, 'show'])
+    ->name('products.show');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
