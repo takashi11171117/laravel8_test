@@ -13,9 +13,7 @@
                     <div>@money($product->price)</div>
                     <p>{{ $product->description }}</p>
 
-                    <x-button class="mt-3">
-                        Add to cart
-                    </x-button>
+                    <livewire:store-cart :product="$product" />
                 </div>
             </div>
         </div>
