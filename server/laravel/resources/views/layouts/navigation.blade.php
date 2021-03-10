@@ -15,6 +15,9 @@
                     <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
                         {{ __('Products') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('cart.index')" :active="request()->routeIs('cart.index')">
+                        Cart ({{ optional(optional($cart)->products)->count() ?? 0 }})
+                    </x-nav-link>
                 </div>
             </div>
 

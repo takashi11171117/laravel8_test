@@ -28,9 +28,16 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request)
     {
+        $cart = Cart::bySession()->first();
+
         $request->authenticate();
 
         $request->session()->regenerate();
+
+        optional($cart)->update([
+            'session_id' => session()->getId(),
+            'user_id' => auth()->id()
+        ]);
 
         return redirect()->intended(RouteServiceProvider::HOME);
     }
@@ -43,11 +50,17 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request)
     {
+        $cart = Cart::bySession()->first();
+
         Auth::guard('web')->logout();
 
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
+
+        optional($cart)->update([
+            'session_id' => session()->getId(),
+        ]);
 
         return redirect('/');
     }
