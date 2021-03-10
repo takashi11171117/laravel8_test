@@ -6,6 +6,7 @@ use App\Models\Cart;
 use App\Models\Article;
 use App\Models\Episode;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Relations\Relation;
 
@@ -35,6 +36,10 @@ class AppServiceProvider extends ServiceProvider
 
         View::composer('*', function ($view) {
             $view->with('cart', Cart::bySession()->first());
+        });
+
+        Blade::directive('money', function ($expression) {
+            return "<?php echo Laravel\Cashier\Cashier::formatAmount($expression, config('cashier.currency')); ?>";
         });
     }
 }

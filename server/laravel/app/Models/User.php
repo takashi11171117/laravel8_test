@@ -2,14 +2,15 @@
 
 namespace App\Models;
 
+use Laravel\Cashier\Billable;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, Billable;
 
     /**
      * The attributes that are mass assignable.
@@ -44,5 +45,15 @@ class User extends Authenticatable
     public function avatar()
     {
         return 'https://www.gravatar.com/avatar/' . md5($this->email) . '?s=80&d=mp';
+    }
+
+    public function cart()
+    {
+        return $this->hasOne(Cart::class)->latest();
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
     }
 }
