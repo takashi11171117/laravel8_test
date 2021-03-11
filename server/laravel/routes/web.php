@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\EpisodeController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CheckoutController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +26,9 @@ Route::get('/products/{product:slug}', [ProductController::class, 'show'])
 
 Route::get('/cart', [CartController::class, 'index'])
     ->name('cart.index');
+
+    Route::get('/checkout', [CheckoutController::class, 'index'])
+        ->name('checkout.index');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
